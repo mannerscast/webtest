@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="50"> <!-- Automatically refresh every 5 minutes -->
+    <title>Weather Information</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("images/bg.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+        }
+        #weather-info {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(106, 90, 205, 0.5); /* Slate blue color with 50% opacity */
+            color: white;
+            font-size: 150x;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .temperature {
+            font-size: 150px;
+        }
+        .zip-code {
+            font-size: 40px;
+        }
+        .conditions {
+            font-size: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div id="weather-info">
+        <div class="temperature">Loading...</div>
+        <div class="conditions">Loading...</div>
+        <div class="zip-code">75013</div>
+    </div>
+    
+    <script>
+        // Fetch weather information from WeatherAPI.com
+        fetch('https://api.weatherapi.com/v1/current.json?key=f05bf7f455064cc9ac0191426242901&q=75013')
+            .then(response => response.json())
+            .then(data => {
+                // Extract temperature and condition from response
+                const temperature = data.current.temp_f;
+                const condition = data.current.condition.text;
+
+                // Update weather information on the page
+                document.querySelector('.temperature').textContent = `Temperature: ${temperature}°F`;
+                document.querySelector('.conditions').textContent = `Condition: ${condition}`;
+            })
+            .catch(error => console.error('Error fetching weather data:', error));
+    </script>
+</body>
+</html>
